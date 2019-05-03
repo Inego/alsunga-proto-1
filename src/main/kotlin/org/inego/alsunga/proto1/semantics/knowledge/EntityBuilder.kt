@@ -6,7 +6,7 @@ class EntityBuilder(val ontologyBuilder: OntologyBuilder, id: String) {
 
     fun build(): Entity = entity
 
-    fun attr(attributeId: String) {
-        entity.attributes.add(ontologyBuilder.findAttributeById(attributeId))
+    fun attr(id: String) {
+        entity.attributes.add(ontologyBuilder.findAttributeById(id))
     }
 }

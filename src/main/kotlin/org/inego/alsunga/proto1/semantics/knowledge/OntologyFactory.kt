@@ -5,13 +5,20 @@ object OntologyFactory {
     val sampleOntology by lazy {
 
         OntologyBuilder.new {
-            attr("can_see")
             attr("visible")
+
+            attr("countable_entity") {
+                isAttr("visible")
+            }
+
+            attr("can_see")
+
             attr("living") {
                 isAttr("countable_entity")
             }
             attr("animal") {
                 isAttr("living")
+                isAttr("can_see")
             }
             attr("human") {
                 isAttr("animal")
@@ -38,6 +45,11 @@ object OntologyFactory {
 
         }.build()
 
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        sampleOntology
     }
 
 }

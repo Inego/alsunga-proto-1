@@ -5,15 +5,15 @@ class OntologyBuilder {
 
     fun build() = ontology
 
-    fun attr(attributeId: String, block: AttributeBuilder.() -> Unit) = AttributeBuilder(this, attributeId)
+    fun attr(id: String, block: AttributeBuilder.() -> Unit) = AttributeBuilder(this, id)
             .apply(block).also {
                 ontology.addAttribute(it.build())
             }
 
-    fun attr(attributeId: String) = attr(attributeId) { }
+    fun attr(id: String) = attr(id) { }
 
-    fun relation(relationId: String, block: RelationBuilder.() -> Unit) =
-            RelationBuilder(this, relationId)
+    fun relation(id: String, block: RelationBuilder.() -> Unit) =
+            RelationBuilder(this, id)
                     .apply(block)
                     .also{
                         ontology.addRelation(it.build())
@@ -22,7 +22,7 @@ class OntologyBuilder {
     fun findAttributeById(attributeId: String): Attribute = ontology.attributeIdx[attributeId]
             ?: error("Unknown attribute '$attributeId'")
 
-    fun entity(entityId: String, block: EntityBuilder.() -> Unit) = EntityBuilder(this, entityId)
+    fun entity(id: String, block: EntityBuilder.() -> Unit) = EntityBuilder(this, id)
             .apply(block)
             .also {
                 ontology.addEntity(it.build())
