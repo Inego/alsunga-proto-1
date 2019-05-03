@@ -4,5 +4,6 @@ interface Ontology {
 
     fun findRelationById(id: String): Relation
 
+
 }
 
