@@ -8,8 +8,8 @@ class SlotBuilder(
 
     fun build() = slot
 
-    fun which(attributeId: String) {
-        slot.attributes.add(relationBuilder.ontologyBuilder.findSlotAttributeById(attributeId))
+    fun required(attributeId: String) {
+        slot.attributes.add(relationBuilder.ontologyBuilder.findAttributeById(attributeId))
     }
 
 }

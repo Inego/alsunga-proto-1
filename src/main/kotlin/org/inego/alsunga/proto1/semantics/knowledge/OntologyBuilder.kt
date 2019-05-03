@@ -5,7 +5,12 @@ class OntologyBuilder {
 
     fun build() = ontology
 
-    fun slotAttribute(attributeId: String) = ontology.slotAttribute(attributeId)
+    fun attr(attributeId: String, block: AttributeBuilder.() -> Unit) = AttributeBuilder(this, attributeId)
+            .apply(block).also {
+                ontology.addAttribute(it.build())
+            }
+
+    fun attr(attributeId: String) = attr(attributeId) { }
 
     fun relation(relationId: String, block: RelationBuilder.() -> Unit) =
             RelationBuilder(this, relationId)
@@ -14,8 +19,14 @@ class OntologyBuilder {
                         ontology.addRelation(it.build())
                     }
 
-    fun findSlotAttributeById(attributeId: String): SlotAttribute = ontology.slotAttributeIdx[attributeId]
-            ?: error("Unknown slot attribute '$attributeId'")
+    fun findAttributeById(attributeId: String): Attribute = ontology.attributeIdx[attributeId]
+            ?: error("Unknown attribute '$attributeId'")
+
+    fun entity(entityId: String, block: EntityBuilder.() -> Unit) = EntityBuilder(this, entityId)
+            .apply(block)
+            .also {
+                ontology.addEntity(it.build())
+            }
 
     companion object {
         fun new(block: OntologyBuilder.() -> Unit) = OntologyBuilder().apply(block)

@@ -6,5 +6,5 @@ interface RelationSlot {
 
     val relation: Relation
 
-    val attributes: Collection<SlotAttribute>
+    val attributes: Collection<Attribute>
 }

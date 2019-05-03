@@ -12,6 +12,4 @@ class SceneBuilder(private val ontology: Ontology) {
 
 }
 
-class SceneRelationBuilder(val relation: Relation) {
-
-}
+class SceneRelationBuilder(val relation: Relation)

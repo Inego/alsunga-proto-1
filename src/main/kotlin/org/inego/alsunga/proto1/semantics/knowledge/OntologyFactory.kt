@@ -5,19 +5,37 @@ object OntologyFactory {
     val sampleOntology by lazy {
 
         OntologyBuilder.new {
-            slotAttribute("can_see")
-            slotAttribute("visible")
+            attr("can_see")
+            attr("visible")
+            attr("living") {
+                isAttr("countable_entity")
+            }
+            attr("animal") {
+                isAttr("living")
+            }
+            attr("human") {
+                isAttr("animal")
+            }
 
             relation("see") {
 
                 slot("actor") {
-                    which("can_see")
+                    required("can_see")
                 }
 
                 slot("object") {
-                    which("visible")
+                    required("visible")
                 }
             }
+
+            entity("speaker") {
+                attr("human")
+            }
+
+            entity("human") {
+                attr("human")
+            }
+
         }.build()
 
     }
