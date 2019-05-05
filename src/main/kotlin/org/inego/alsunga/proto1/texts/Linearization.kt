@@ -13,6 +13,4 @@ interface Linearization {
 
     val grammaticalGraph: GrammaticalGraph
 
-    val ranges: Collection<TextRange>
-
 }

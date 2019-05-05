@@ -18,4 +18,8 @@ class SceneRelationImpl(override val relation: Relation) : SceneRelation {
         slots[relationSlot] = node
     }
 
+    fun fillSlot(slot: RelationSlot, node: SceneNode) {
+        slots[slot] = node
+    }
+
 }

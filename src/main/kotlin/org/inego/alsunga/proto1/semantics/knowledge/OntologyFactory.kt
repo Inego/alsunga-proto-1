@@ -15,8 +15,6 @@ object OntologyFactory {
 
             attr("can_see")
 
-            attr("merry")
-
             attr("living") {
                 isAttr("countable_entity")
             }
@@ -26,7 +24,6 @@ object OntologyFactory {
             }
             attr("human") {
                 isAttr("animal")
-                commonAttr("merry")
             }
 
             relation("see") {
@@ -46,6 +43,12 @@ object OntologyFactory {
 
             entity("human") {
                 attr("human")
+            }
+
+            relation("merry") {
+                slot("person") {
+                    required("human")
+                }
             }
 
         }.build()
