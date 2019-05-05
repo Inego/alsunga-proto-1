@@ -1,7 +1,7 @@
 package org.inego.alsunga.proto1.texts
 
 import org.inego.alsunga.proto1.languages.Language
-import org.inego.alsunga.proto1.semantics.Scene
+import org.inego.alsunga.proto1.semantics.scene.Scene
 
 interface Linearization {
 

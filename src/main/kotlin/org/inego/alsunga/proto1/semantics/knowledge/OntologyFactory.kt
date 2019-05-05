@@ -1,5 +1,7 @@
 package org.inego.alsunga.proto1.semantics.knowledge
 
+import org.inego.alsunga.proto1.semantics.knowledge.builders.OntologyBuilder
+
 object OntologyFactory {
 
     val sampleOntology by lazy {
@@ -13,6 +15,8 @@ object OntologyFactory {
 
             attr("can_see")
 
+            attr("merry")
+
             attr("living") {
                 isAttr("countable_entity")
             }
@@ -22,6 +26,7 @@ object OntologyFactory {
             }
             attr("human") {
                 isAttr("animal")
+                commonAttr("merry")
             }
 
             relation("see") {

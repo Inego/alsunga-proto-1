@@ -1,4 +1,7 @@
-package org.inego.alsunga.proto1.semantics.knowledge
+package org.inego.alsunga.proto1.semantics.knowledge.builders
+
+import org.inego.alsunga.proto1.semantics.knowledge.Entity
+import org.inego.alsunga.proto1.semantics.knowledge.EntityImpl
 
 
 class EntityBuilder(val ontologyBuilder: OntologyBuilder, id: String) {

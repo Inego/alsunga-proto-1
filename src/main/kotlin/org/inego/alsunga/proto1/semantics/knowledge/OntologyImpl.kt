@@ -1,9 +1,13 @@
 package org.inego.alsunga.proto1.semantics.knowledge
 
 class OntologyImpl : Ontology {
+
+
     private val entityIdx: MutableMap<String, Entity> = mutableMapOf()
+
     private val relationIdx: MutableMap<String, Relation> = mutableMapOf()
-    val attributeIdx: MutableMap<String, Attribute> = mutableMapOf()
+
+    private val attributeIdx: MutableMap<String, Attribute> = mutableMapOf()
 
     fun relation(relationId: String, block: RelationImpl.() -> Unit) = RelationImpl(relationId).apply {
         relationIdx[relationId] = this
@@ -16,6 +20,12 @@ class OntologyImpl : Ontology {
 
     override fun findRelationById(id: String): Relation = relationIdx[id]
             ?: error("Relation id '$id' not found")
+
+    override fun findAttributeById(id: String): Attribute = attributeIdx[id]
+            ?: error("Attribute id '$id' not found")
+
+    override fun findEntityById(id: String): Entity = entityIdx[id]
+            ?: error("Entity id '$id' not found")
 
     fun addRelation(relation: Relation) {
         relationIdx[relation.id] = relation

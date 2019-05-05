@@ -1,4 +1,8 @@
-package org.inego.alsunga.proto1.semantics.knowledge
+package org.inego.alsunga.proto1.semantics.knowledge.builders
+
+import org.inego.alsunga.proto1.semantics.knowledge.AttributeEdgeImpl
+import org.inego.alsunga.proto1.semantics.knowledge.AttributeImpl
+import org.inego.alsunga.proto1.semantics.knowledge.AttributeLikelihood
 
 class AttributeBuilder(
         private val ontologyBuilder: OntologyBuilder,
@@ -11,6 +15,10 @@ class AttributeBuilder(
 
     fun isAttr(attributeId: String) {
         attr(attributeId, AttributeLikelihood.IS)
+    }
+
+    fun commonAttr(attributeId: String) {
+        attr(attributeId, AttributeLikelihood.COMMON)
     }
 
     fun attr(attributeId: String, likelihood: AttributeLikelihood) {

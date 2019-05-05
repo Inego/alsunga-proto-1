@@ -1,4 +1,7 @@
-package org.inego.alsunga.proto1.semantics.knowledge
+package org.inego.alsunga.proto1.semantics.knowledge.builders
+
+import org.inego.alsunga.proto1.semantics.knowledge.Attribute
+import org.inego.alsunga.proto1.semantics.knowledge.OntologyImpl
 
 class OntologyBuilder {
     private val ontology = OntologyImpl()
@@ -19,8 +22,7 @@ class OntologyBuilder {
                         ontology.addRelation(it.build())
                     }
 
-    fun findAttributeById(attributeId: String): Attribute = ontology.attributeIdx[attributeId]
-            ?: error("Unknown attribute '$attributeId'")
+    fun findAttributeById(attributeId: String): Attribute = ontology.findAttributeById(attributeId)
 
     fun entity(id: String, block: EntityBuilder.() -> Unit) = EntityBuilder(this, id)
             .apply(block)

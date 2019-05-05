@@ -1,4 +1,6 @@
-package org.inego.alsunga.proto1.semantics.knowledge
+package org.inego.alsunga.proto1.semantics.knowledge.builders
+
+import org.inego.alsunga.proto1.semantics.knowledge.RelationImpl
 
 class RelationBuilder(val ontologyBuilder: OntologyBuilder, relationId: String) {
 
