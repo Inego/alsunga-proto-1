@@ -1,9 +1,12 @@
 package org.inego.alsunga.proto1.semantics.knowledge
 
-interface Attribute {
-
-    val id: String
+/**
+ * Special kind of relation with one slot and support of hierarchies / classification
+ */
+interface Attribute : Relation {
 
     val edges: Collection<AttributeEdge>
+
+    val slot: RelationSlot
 
 }

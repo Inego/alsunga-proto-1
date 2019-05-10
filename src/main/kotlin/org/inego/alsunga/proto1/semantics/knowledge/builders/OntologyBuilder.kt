@@ -10,7 +10,8 @@ class OntologyBuilder {
 
     fun attr(id: String, block: AttributeBuilder.() -> Unit) = AttributeBuilder(this, id)
             .apply(block).also {
-                ontology.addAttribute(it.build())
+
+                ontology.addRelation(it.build())
             }
 
     fun attr(id: String) = attr(id) { }
@@ -22,13 +23,9 @@ class OntologyBuilder {
                         ontology.addRelation(it.build())
                     }
 
-    fun findAttributeById(attributeId: String): Attribute = ontology.findAttributeById(attributeId)
-
-    fun entity(id: String, block: EntityBuilder.() -> Unit) = EntityBuilder(this, id)
-            .apply(block)
-            .also {
-                ontology.addEntity(it.build())
-            }
+    fun findAttributeById(attributeId: String, create: Boolean = false): Attribute {
+        return ontology.findAttributeById(attributeId, create)
+    }
 
     companion object {
         fun new(block: OntologyBuilder.() -> Unit) = OntologyBuilder().apply(block)

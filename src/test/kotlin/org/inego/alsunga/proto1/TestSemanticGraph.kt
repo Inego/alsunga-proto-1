@@ -9,12 +9,18 @@ fun main() {
     val ontology = OntologyFactory.sampleOntology
 
     val scene = SceneBuilder(ontology).build {
-        rel("see") {
-            slot("actor", entity("speaker"))
-            slot("object", entity("human").underRelation("merry") {})
+
+        rel("siblings") {
+            slot("sibling", entity("speaker"))
+            slot("sibling", entity("female"))
         }
+
+        rel("see") {
+            slot("actor", nodeWithAttr("female"))
+            slot("object", entity("book", "big"))
+        }
+
     }
 
     print(scene)
-
 }

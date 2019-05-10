@@ -9,8 +9,23 @@ object OntologyFactory {
         OntologyBuilder.new {
             attr("visible")
 
+            attr("speaker")
+
+            attr("listener")
+
             attr("countable_entity") {
                 isAttr("visible")
+            }
+
+            attr("thing") {
+                isAttr("countable_entity")
+                commonAttr("big")
+                commonAttr("small")
+
+            }
+
+            attr("book") {
+                isAttr("thing")
             }
 
             attr("can_see")
@@ -26,6 +41,14 @@ object OntologyFactory {
                 isAttr("animal")
             }
 
+            attr("female") {
+                isAttr("animal")
+            }
+
+            attr("male") {
+                isAttr("animal")
+            }
+
             relation("see") {
 
                 slot("actor") {
@@ -37,16 +60,18 @@ object OntologyFactory {
                 }
             }
 
-            entity("speaker") {
-                attr("human")
-            }
-
-            entity("human") {
+            attr("speaker") {
                 attr("human")
             }
 
             relation("merry") {
                 slot("person") {
+                    required("human")
+                }
+            }
+
+            relation("siblings") {
+                slot("sibling") {
                     required("human")
                 }
             }

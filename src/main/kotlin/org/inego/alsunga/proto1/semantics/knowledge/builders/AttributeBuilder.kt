@@ -22,7 +22,7 @@ class AttributeBuilder(
     }
 
     fun attr(attributeId: String, likelihood: AttributeLikelihood) {
-        attribute.edges += AttributeEdgeImpl(ontologyBuilder.findAttributeById(attributeId), likelihood)
+        attribute.edges += AttributeEdgeImpl(ontologyBuilder.findAttributeById(attributeId, true), likelihood)
     }
 
 }

@@ -1,9 +1,10 @@
 package org.inego.alsunga.proto1.semantics.scene
 
+import org.inego.alsunga.proto1.semantics.knowledge.Attribute
 import org.inego.alsunga.proto1.semantics.knowledge.Ontology
 import org.inego.alsunga.proto1.semantics.knowledge.RelationSlot
 
-class SceneBuilder(private val ontology: Ontology) {
+class SceneBuilder(val ontology: Ontology) {
 
     val scene = SceneImpl()
 
@@ -25,13 +26,6 @@ class SceneBuilder(private val ontology: Ontology) {
         return scene
     }
 
-    fun entity(entityId: String, vararg attrIds: String): SceneEntityNodeBuilder {
-        val result = SceneEntityNodeImpl(ontology.findEntityById(entityId))
-        scene.nodes += result
-        attrIds.mapTo(result.attributes, ontology::findAttributeById)
-        return SceneEntityNodeBuilder(result, this)
-    }
-
 }
 
 class SceneRelationBuilder(val sceneRelation: SceneRelationImpl, val sceneBuilder: SceneBuilder) {
@@ -40,12 +34,36 @@ class SceneRelationBuilder(val sceneRelation: SceneRelationImpl, val sceneBuilde
         sceneRelation.fillSlot(slotId, nodeBuilder.build())
     }
 
-    fun slot(slotId: String, node: SceneEntityNode) {
+    fun slot(slotId: String, node: SceneNode) {
         sceneRelation.fillSlot(slotId, node)
     }
 
     fun slot(slot: RelationSlot, node: SceneEntityNode) {
         sceneRelation.fillSlot(slot, node)
+    }
+
+    fun slot(idx: Int, node: SceneEntityNodeImpl) {
+        sceneRelation.fillSlot(idx, node)
+    }
+
+    fun entity(vararg attrIds: String): SceneEntityNode {
+        val entityNode = SceneEntityNodeImpl()
+        sceneBuilder.scene.nodes += entityNode
+        attrIds.forEach {
+            sceneBuilder.rel(it) {
+                slot(0, entityNode)
+            }
+        }
+        return entityNode
+    }
+
+    fun nodeWithAttr(attrId: String): SceneNode {
+        for (sceneRelation in sceneBuilder.scene.relations) {
+            if (sceneRelation.relation is Attribute) {
+                return sceneRelation[sceneRelation.relation.slot]
+            }
+        }
+        throw AssertionError("Node with attribute '$attrId' not found")
     }
 
 }

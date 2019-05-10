@@ -1,6 +1,6 @@
 package org.inego.alsunga.proto1.semantics.knowledge
 
-class RelationImpl(
+open class RelationImpl(
         override val id: String
 ) : Relation {
     override val kinds: MutableSet<RelationKind> = mutableSetOf()

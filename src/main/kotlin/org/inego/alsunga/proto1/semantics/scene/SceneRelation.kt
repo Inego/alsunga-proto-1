@@ -7,4 +7,6 @@ interface SceneRelation {
     val relation: Relation
 
     val slots: Map<RelationSlot, SceneNode>
+
+    operator fun get(slot: RelationSlot): SceneNode
 }
