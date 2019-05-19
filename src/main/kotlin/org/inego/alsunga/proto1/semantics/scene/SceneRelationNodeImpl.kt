@@ -6,11 +6,11 @@ import java.lang.AssertionError
 import java.lang.RuntimeException
 import java.util.NoSuchElementException
 
-class SceneRelationImpl(override val relation: Relation) : SceneRelation {
+class SceneRelationNodeImpl(override val relation: Relation) : SceneRelationNode {
     override val slots = mutableMapOf<RelationSlot, SceneNode>()
 
     override fun get(slot: RelationSlot): SceneNode {
-        return slots[slot] ?: throw AssertionError("Slot '${slot.id}' not found")
+            return slots[slot] ?: throw AssertionError("Slot '${slot.id}' not found")
     }
 
     fun fillSlot(slotId: String, node: SceneNode) {

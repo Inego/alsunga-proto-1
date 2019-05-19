@@ -11,14 +11,13 @@ class SceneBuilder(val ontology: Ontology) {
     fun rel(id: String, block: SceneRelationBuilder.() -> Unit) {
 
         val relation = ontology.findRelationById(id)
-        val sceneRelation = SceneRelationImpl(relation)
+        val sceneRelation = SceneRelationNodeImpl(relation)
 
-        scene.relations += sceneRelation
+        scene.nodes += sceneRelation
 
         val sceneRelationBuilder = SceneRelationBuilder(sceneRelation, this)
 
         sceneRelationBuilder.apply(block)
-
     }
 
     fun build(block: SceneBuilder.() -> Unit): SceneImpl {
@@ -26,9 +25,13 @@ class SceneBuilder(val ontology: Ontology) {
         return scene
     }
 
+    fun attr(attributeId: String, node: SceneEntityNodeImpl) {
+        val attribute = ontology.findAttributeById(attributeId, false)
+        scene.nodes += SceneAttributeNodeImpl(attribute, node)
+    }
 }
 
-class SceneRelationBuilder(val sceneRelation: SceneRelationImpl, val sceneBuilder: SceneBuilder) {
+class SceneRelationBuilder(val sceneRelation: SceneRelationNodeImpl, val sceneBuilder: SceneBuilder) {
 
     fun slot(slotId: String, nodeBuilder: SceneEntityNodeBuilder) {
         sceneRelation.fillSlot(slotId, nodeBuilder.build())
@@ -49,18 +52,21 @@ class SceneRelationBuilder(val sceneRelation: SceneRelationImpl, val sceneBuilde
     fun entity(vararg attrIds: String): SceneEntityNode {
         val entityNode = SceneEntityNodeImpl()
         sceneBuilder.scene.nodes += entityNode
+
+        val nodeBuilder = SceneEntityNodeBuilder(entityNode, sceneBuilder)
+
         attrIds.forEach {
-            sceneBuilder.rel(it) {
-                slot(0, entityNode)
-            }
+            nodeBuilder.attr(it)
         }
+
         return entityNode
     }
 
     fun nodeWithAttr(attrId: String): SceneNode {
-        for (sceneRelation in sceneBuilder.scene.relations) {
-            if (sceneRelation.relation is Attribute) {
-                return sceneRelation[sceneRelation.relation.slot]
+
+        for (node in sceneBuilder.scene.nodes) {
+            if (node is SceneAttributeNode && node.relation.id == attrId) {
+                return node.target
             }
         }
         throw AssertionError("Node with attribute '$attrId' not found")
@@ -71,15 +77,8 @@ class SceneRelationBuilder(val sceneRelation: SceneRelationImpl, val sceneBuilde
 class SceneEntityNodeBuilder(val node: SceneEntityNodeImpl, val sceneBuilder: SceneBuilder) {
     fun build() = node
 
-    fun underRelation(attributeId: String, block: SceneRelationBuilder.() -> Unit): SceneEntityNodeBuilder {
-
-        sceneBuilder.rel(attributeId) {
-            // Get first slot of this relation
-            val firstSlot = sceneRelation.relation.slots.first()
-            slot(firstSlot, node)
-            block()
-        }
-
+    fun attr(attributeId: String): SceneEntityNodeBuilder {
+        sceneBuilder.attr(attributeId, node)
         return this
     }
 }

@@ -1,7 +1,5 @@
 package org.inego.alsunga.proto1.semantics.knowledge
 
-import com.sun.org.apache.xerces.internal.dom.AttrImpl
-
 class OntologyImpl : Ontology {
 
     private val relationIdx: MutableMap<String, Relation> = mutableMapOf()

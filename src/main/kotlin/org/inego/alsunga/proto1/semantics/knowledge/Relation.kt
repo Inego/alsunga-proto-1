@@ -6,6 +6,6 @@ interface Relation {
 
     val slots: Collection<RelationSlot>
 
-    val kinds: Set<RelationKind>
+//    val kinds: Set<RelationKind>
 
 }

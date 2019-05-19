@@ -4,6 +4,4 @@ interface Scene {
 
     val nodes: Collection<SceneNode>
 
-    val relations: Collection<SceneRelation>
-
 }

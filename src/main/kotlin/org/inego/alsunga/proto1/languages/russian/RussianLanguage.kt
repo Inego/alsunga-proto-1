@@ -1,11 +1,14 @@
 package org.inego.alsunga.proto1.languages.russian
 
+import org.inego.alsunga.proto1.languages.AbstractLanguage
 import org.inego.alsunga.proto1.languages.Language
 import org.inego.alsunga.proto1.semantics.scene.Scene
 import org.inego.alsunga.proto1.texts.Linearization
 
-class RussianLanguage : Language {
-    override fun linearize(scene: Scene): Linearization {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class RussianLanguage : AbstractLanguage() {
+
+    init {
+
     }
+
 }
