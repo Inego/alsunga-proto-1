@@ -1,6 +1,6 @@
 package org.inego.alsunga.proto1.languages.german
 
-abstract class EntityWithDecliner : EntityWithDeclension {
+abstract class EntityWithDecliner : Declined {
     abstract val stem: String
 
     abstract val decliner: Decliner
