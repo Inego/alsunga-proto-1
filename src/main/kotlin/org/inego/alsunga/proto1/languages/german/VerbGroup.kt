@@ -1,17 +1,23 @@
 package org.inego.alsunga.proto1.languages.german
 
+import org.inego.alsunga.proto1.texts.*
+
 open class SeparableParticle(val particle: String)
 
 object SeparableParticleZu : SeparableParticle("zu")
 
-enum class Tense {
+enum class Tense : EnumFeatureValue {
     PRAESENS,
     PRAETERITUM,
     FUTUR_I,
     PERFEKT,
     PLUSQUAMPERFEKT,
-    FUTUR_II,
+    FUTUR_II;
+
+    object Feature : GrammaticalFeature<Tense>
+    override val feature = Feature
 }
+
 
 interface Conjugated {
     val infinitiv: String
@@ -28,7 +34,7 @@ abstract class FullVerb(
 )
 
 
-class RegularVerb(val stem: String) : Conjugated {
+class RegularVerb(private val stem: String) : Conjugated {
     override val infinitiv = stem + "en"
     override val partizipPraesens = stem + "end"
     override val partizipPerfekt = "ge" + stem + "t"
@@ -58,3 +64,23 @@ object Zuhoeren : FullVerb(
         SeparableParticleZu,
         RegularVerb("hör")
 )
+
+class VerbGroup (
+        val fullVerb: FullVerb
+) : AbstractGrammaticalNode() {
+
+    init {
+        setDynamic(Person.FIRST, Number.SINGULAR, Tense.PRAESENS)
+    }
+
+    val person = getDynamic(Person.Feature)
+    val number = getDynamic(Number.Feature)
+    val tense = getDynamic(Tense.Feature)
+
+    override val toText: List<Token>
+        get() {
+            return fullVerb.baseVerb.conjugate(person, number, tense).asText +
+                    internalChildren.flatMap { it.toText } +
+                    fullVerb.separableParticle?.particle.asText
+        }
+}

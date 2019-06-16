@@ -1,7 +1,13 @@
 package org.inego.alsunga.proto1.languages.german
 
-enum class Person {
+import org.inego.alsunga.proto1.texts.EnumFeatureValue
+import org.inego.alsunga.proto1.texts.GrammaticalFeature
+
+enum class Person : EnumFeatureValue {
     FIRST,
     SECOND,
-    THIRD
+    THIRD;
+
+    object Feature : GrammaticalFeature<Person>
+    override val feature = Feature
 }
