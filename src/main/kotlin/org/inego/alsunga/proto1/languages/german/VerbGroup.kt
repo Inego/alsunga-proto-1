@@ -79,8 +79,11 @@ class VerbGroup (
 
     override val toText: List<Token>
         get() {
-            return fullVerb.baseVerb.conjugate(person, number, tense).asText +
-                    internalChildren.flatMap { it.toText } +
+            return internalChildren[0].toText +
+                    fullVerb.baseVerb.conjugate(person, number, tense).asText +
+                    internalChildren.drop(1).flatMap { it.toText } +
                     fullVerb.separableParticle?.particle.asText
         }
 }
+
+class Subject
